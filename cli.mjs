@@ -50,11 +50,14 @@ async function simulateLC3(lc3) {
 		},
 	);
 
+	let instrCount = 0;
+	const BATCH_SIZE = 0x1000;
+
 	while (lc3.isRunning()) {
 		lc3.nextInstruction();
 
 		if (process.stdin.isTTY) {
-			if (lc3.bufferedKeys.isEmpty()) {
+			if (lc3.bufferedKeys.isEmpty() && ++instrCount % BATCH_SIZE === 0) {
 				// yield to event loop for io
 				await new Promise((resolve) => setTimeout(resolve, 0));
 			}
