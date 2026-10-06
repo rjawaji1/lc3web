@@ -1,0 +1,22 @@
+{
+	"name": "bot",
+	"version": "0.0.0",
+	"private": true,
+	"scripts": {
+		"deploy": "wrangler deploy",
+		"dev": "wrangler dev",
+		"start": "wrangler dev",
+		"cf-typegen": "wrangler types"
+	},
+	"devDependencies": {
+		"@types/node": "^26.6.4",
+		"@types/node-fetch": "^2.6.13",
+		"discord-api-types": "^0.38.56",
+		"typescript": "^5.9.3",
+		"wrangler": "^4.147.0"
+	},
+	"dependencies": {
+		"node-fetch": "^3.3.2",
+		"tweetnacl": "^1.0.3"
+	}
+}
