@@ -1,4 +1,4 @@
-import { InteractionType } from "discord-api-types/v10";
+import { ComponentType, InteractionType } from "discord-api-types/v10";
 import type {
 	APIChatInputApplicationCommandInteraction,
 	APIInteraction,
@@ -25,4 +25,15 @@ export function isModalSubmit(interaction: APIInteraction)
 export function isMessageComponent(interaction: APIInteraction)
 	: interaction is APIMessageComponentInteraction {
 	return interaction.type === InteractionType.MessageComponent
+}
+
+export function modalTextInputValue(interaction: APIModalSubmitInteraction, id: string): string {
+	const inputs = interaction.data.components.flatMap((component) => {
+		if (component.type === ComponentType.ActionRow) return component.components;
+		if (component.type === ComponentType.Label && component.component.type === ComponentType.TextInput) {
+			return [component.component];
+		}
+		return [];
+	});
+	return inputs.find((input) => input.custom_id === id)?.value ?? "";
 }

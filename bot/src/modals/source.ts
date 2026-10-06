@@ -6,20 +6,14 @@ import { ButtonStyle, ComponentType } from "discord-api-types/v10";
 import assemble from "../../../src/lc3_as.js";
 import { ephemeral, reply } from "../discord_responses";
 import { Colors } from "../constants";
+import { modalTextInputValue } from "../helper";
 
 export const source = async (
 	interaction: APIModalSubmitInteraction,
 	_env: Env,
 	_ctx: ExecutionContext
 ): Promise<APIInteractionResponse> => {
-	const inputs = interaction.data.components.flatMap((component) => {
-		if (component.type === ComponentType.ActionRow) return component.components;
-		if (component.type === ComponentType.Label && component.component.type === ComponentType.TextInput) {
-			return [component.component];
-		}
-		return [];
-	});
-	const code = inputs.find((input) => input.custom_id === "code")?.value ?? "";
+	const code = modalTextInputValue(interaction, "code");
 
 	const result = assemble(code);
 	if (result.error) return ephemeral(result.error.join("\n").slice(0, 2000));

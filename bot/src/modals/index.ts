@@ -7,6 +7,7 @@ import { ephemeral } from "../discord_responses";
 import { Responses } from "../constants";
 
 import { source } from "./source"
+import { input } from "./input"
 
 type ModalHandler = (
 	interaction: APIModalSubmitInteraction,
@@ -15,7 +16,8 @@ type ModalHandler = (
 ) => Promise<APIInteractionResponse>;
 
 const modals: Record<string, ModalHandler> = {
-	"parse_code": source
+	"parse_code": source,
+	"run_input": input
 }
 
 export async function handleModalSubmit(
