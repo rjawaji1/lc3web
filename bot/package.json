@@ -20,5 +20,15 @@
 	"dependencies": {
 		"node-fetch": "^3.3.2",
 		"tweetnacl": "^1.0.3"
+	},
+	"engines": {
+		"node": ">=v24.18.0"
+	},
+	"devEngines": {
+		"packageManager": {
+			"name": "pnpm",
+			"version": "12.9.1",
+			"onFail": "download"
+		}
 	}
 }
