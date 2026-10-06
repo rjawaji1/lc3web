@@ -1,18 +1,62 @@
-/**
- * Welcome to Cloudflare Workers! This is your first worker.
- *
- * - Run `npm run dev` in your terminal to start a development server
- * - Open a browser tab at http://localhost:8787/ to see your worker in action
- * - Run `npm run deploy` to publish your worker
- *
- * Bind resources to your worker in `wrangler.jsonc`. After adding bindings, a type definition for the
- * `Env` object can be regenerated with `npm run cf-typegen`.
- *
- * Learn more at https://developers.cloudflare.com/workers/
- */
+import { Buffer } from "node:buffer"
+
+import nacl from "tweetnacl"
+
+import { Responses } from "./constants"
+import { APIInteraction, InteractionResponseType } from "discord-api-types/v10";
+import { isApplicationCommand, isMessageComponent, isModalSubmit, isPing } from "./helper";
+
+
+function validate(body: string, request: Request, env: Env): boolean {
+	const signature = request.headers.get('x-signature-ed25519');
+	const timestamp = request.headers.get('x-signature-timestamp');
+	return (
+		!!signature &&
+		!!timestamp &&
+		nacl.sign.detached.verify(
+			Buffer.from(timestamp + body),
+			Buffer.from(signature, 'hex'),
+			Buffer.from(env.PUBLIC_KEY, 'hex'),
+		)
+	);
+}
 
 export default {
 	async fetch(request, env, ctx): Promise<Response> {
-		return new Response("Hello World!");
+		// Discord API only sends POST requests
+		if (request.method !== "POST") {
+			return new Response(Responses.MethodNotAllowed, { status: 405 })
+		}
+
+		// Validate whether the request is from Discord
+		const body = await request.text()
+		const verified = validate(body, request, env)
+		if (!verified) {
+			return new Response(Responses.InvalidSignature, { status: 401 })
+		}
+
+		const interaction = JSON.parse(body) as APIInteraction;
+
+		// Handle Ping
+		if (isPing(interaction)) {
+			return Response.json({ type: InteractionResponseType.Pong })
+		}
+
+		// Handle Command
+		if (isApplicationCommand(interaction)) {
+			// TODO: Handle Command
+		}
+
+		// Handle Message Components
+		if (isMessageComponent(interaction)) {
+			// TODO: Handle Message Command
+		}
+
+		// Handle Modals
+		if (isModalSubmit(interaction)) {
+			// TODO: Handle Model Submit
+		}
+
+		return new Response(Responses.InvalidRequestType, { status: 400 })
 	},
-} satisfies ExportedHandler<Env>;
+} satisfies ExportedHandler<Env>
