@@ -1,0 +1,34 @@
+{
+	"name": "bot",
+	"version": "0.0.0",
+	"private": true,
+	"type": "module",
+	"scripts": {
+		"deploy": "wrangler deploy",
+		"dev": "wrangler dev",
+		"start": "wrangler dev",
+		"cf-typegen": "wrangler types",
+		"register": "export $(grep -v '^#' .env | xargs) && node cmd/register.js"
+	},
+	"devDependencies": {
+		"@types/node": "^26.6.4",
+		"@types/node-fetch": "^2.6.13",
+		"discord-api-types": "^0.38.56",
+		"typescript": "^5.9.3",
+		"wrangler": "^4.147.0"
+	},
+	"dependencies": {
+		"node-fetch": "^3.3.2",
+		"tweetnacl": "^1.0.3"
+	},
+	"engines": {
+		"node": ">=v24.18.0"
+	},
+	"devEngines": {
+		"packageManager": {
+			"name": "pnpm",
+			"version": "12.9.1",
+			"onFail": "download"
+		}
+	}
+}
