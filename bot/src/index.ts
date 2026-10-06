@@ -5,6 +5,7 @@ import nacl from "tweetnacl"
 import { Responses } from "./constants"
 import { APIInteraction, InteractionResponseType } from "discord-api-types/v10";
 import { isApplicationCommand, isMessageComponent, isModalSubmit, isPing } from "./helper";
+import { handleApplicationCommand } from "./commands";
 
 
 function validate(body: string, request: Request, env: Env): boolean {
@@ -36,6 +37,7 @@ export default {
 		}
 
 		const interaction = JSON.parse(body) as APIInteraction;
+		console.info(interaction);
 
 		// Handle Ping
 		if (isPing(interaction)) {
@@ -44,7 +46,7 @@ export default {
 
 		// Handle Command
 		if (isApplicationCommand(interaction)) {
-			// TODO: Handle Command
+			return handleApplicationCommand(interaction, env, ctx);
 		}
 
 		// Handle Message Components
