@@ -1,6 +1,6 @@
 import { LC3Util } from './lc3_util.js';
 import { lc3os, lc3osSymbols } from './lc3_os.js';
-import { getb, geth, setb } from './world.js';
+import { getb, geth, setb } from './world_state.js';
 
 class Queue {
     constructor() {

@@ -2,7 +2,7 @@ import type {
 	APIModalSubmitInteraction,
 	APIInteractionResponse
 } from "discord-api-types/v10"
-import { ComponentType } from "discord-api-types/v10";
+import { ButtonStyle, ComponentType } from "discord-api-types/v10";
 import assemble from "../../../src/lc3_as.js";
 import { ephemeral, reply } from "../discord_responses";
 import { Colors } from "../constants";
@@ -30,6 +30,14 @@ export const source = async (
 			description: `\`\`\`x86asm\n${code}\n\`\`\``,
 			color: Colors.Blurple,
 		}],
-		components: [],
+		components: [{
+			type: ComponentType.ActionRow,
+			components: [{
+				type: ComponentType.Button,
+				custom_id: "run_code",
+				label: "Run",
+				style: ButtonStyle.Primary,
+			}],
+		}],
 	});
 }
