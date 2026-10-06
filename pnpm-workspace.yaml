@@ -1,0 +1,7 @@
+packages:
+    - cli
+    - sim
+    - web
+
+allowBuilds:
+    esbuild: true
