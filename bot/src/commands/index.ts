@@ -6,13 +6,17 @@ import type {
 import { ephemeral } from "../discord_responses";
 import { Responses } from "../constants";
 
+import { run } from "./run"
+
 type CommandHandler = (
 	interaction: APIChatInputApplicationCommandInteraction,
 	env: Env,
 	ctx: ExecutionContext
 ) => Promise<APIInteractionResponse>;
 
-const slash_commands: Record<string, CommandHandler> = {}
+const slash_commands: Record<string, CommandHandler> = {
+	"run": run
+}
 
 export async function handleApplicationCommand(
 	interaction: APIChatInputApplicationCommandInteraction,
