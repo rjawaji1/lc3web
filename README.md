@@ -9,6 +9,7 @@ This is a fork of the web-based LC-3 simulator built by @wchargin with opinionat
 | `sim/`  | `@lc3/sim` | Core simulator logic                 |
 | `web/`  | `@lc3/web` | The web simulator                    |
 | `cli/`  | `@lc3/cli` | Command line assembler and simulator |
+| `bot/`  | `@lc3/bot` | Workers Discord bot                  |
 
 ## dev
 
@@ -20,4 +21,8 @@ pnpm build   # build all packages
 pnpm check   # typecheck
 pnpm lint    # lint
 pnpm format  # format
+pnpm types   # regenerate the bot's worker types
 ```
+
+The bot needs runtime types generated once (`pnpm types`),
+which produces a gitignored `bot/worker-configuration.d.ts`.

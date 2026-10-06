@@ -15,7 +15,8 @@
 		"lint": "eslint .",
 		"format": "prettier --write .",
 		"format:check": "prettier --check .",
-		"check": "tsc --noEmit && pnpm -r --if-present check"
+		"check": "tsc --noEmit && pnpm -r --if-present check",
+		"types": "pnpm --filter @lc3/bot types"
 	},
 	"devDependencies": {
 		"@eslint/js": "^10.0.1",
