@@ -9,5 +9,10 @@ export const run = async (
 	_env: Env,
 	_ctx: ExecutionContext
 ): Promise<APIInteractionResponse> => {
-	return modal("run", "Run LC3", [modalTextAreaComponent("code", "Enter Source Code")]);
+	return modal("parse_code", "Run LC3", [
+		modalTextAreaComponent("code", "Enter Source Code", {
+			required: true,
+			maxLength: 4000,
+		})
+	]);
 }

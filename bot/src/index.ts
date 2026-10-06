@@ -5,6 +5,7 @@ import { APIInteraction, InteractionResponseType } from "discord-api-types/v10";
 
 import { isApplicationCommand, isMessageComponent, isModalSubmit, isPing } from "./helper";
 import { handleApplicationCommand } from "./commands";
+import { handleModalSubmit } from "./modals";
 import { Responses } from "./constants"
 
 function validate(body: string, request: Request, env: Env): boolean {
@@ -55,7 +56,7 @@ export default {
 
 		// Handle Modals
 		if (isModalSubmit(interaction)) {
-			// TODO: Handle Model Submit
+			return handleModalSubmit(interaction, env, ctx);
 		}
 
 		return new Response(Responses.InvalidRequestType, { status: 400 })
