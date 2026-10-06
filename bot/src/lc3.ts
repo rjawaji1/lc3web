@@ -6,9 +6,10 @@ export function runLC3(code: string, input = ""): string {
 	const result = assemble(code);
 	if (result.error) throw new Error(result.error.join("\n"));
 
-	const maxSteps = 100_000;
-	const maxOutput = 1900;
+	const maxSteps = 1_000_000;
+	const maxOutput = 1950;
 	const lc3 = new LC3();
+
 	lc3.loadAssembled(result);
 	for (const byte of new TextEncoder().encode(input)) {
 		lc3.sendKey(byte);
