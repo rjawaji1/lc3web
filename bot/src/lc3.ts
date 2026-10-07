@@ -1,10 +1,10 @@
-import assemble from "../../src/lc3_as.js";
-import LC3 from "../../src/lc3_core.js";
-import { reset } from "../../src/world_state.js";
+import assemble from '@lc3/sim/lc3_as.js';
+import LC3 from '@lc3/sim/lc3_core.js';
+import { reset } from '@lc3/sim/world.js';
 
-export function runLC3(code: string, input = ""): string {
+export function runLC3(code: string, input = ''): string {
 	const result = assemble(code);
-	if (result.error) throw new Error(result.error.join("\n"));
+	if (result.error) throw new Error(result.error.join('\n'));
 
 	const maxSteps = 1_000_000;
 	const maxOutput = 1950;
@@ -15,13 +15,13 @@ export function runLC3(code: string, input = ""): string {
 		lc3.sendKey(byte);
 	}
 	const decoder = new TextDecoder();
-	let output = "";
+	let output = '';
 
 	lc3.addListener((event: { type: string; value?: number | string }) => {
 		if (output.length >= maxOutput) return;
-		if (event.type === "keyout") {
+		if (event.type === 'keyout') {
 			output += decoder.decode(new Uint8Array([event.value as number]), { stream: true });
-		} else if (event.type === "print") {
+		} else if (event.type === 'print') {
 			output += event.value as string;
 		}
 		output = output.slice(0, maxOutput);
@@ -33,8 +33,7 @@ export function runLC3(code: string, input = ""): string {
 		let inputExhausted = false;
 		while (lc3.isRunning() && steps < maxSteps && output.length < maxOutput) {
 			const instruction = lc3.getMemory(lc3.pc);
-			if ((instruction === 0xf020 || instruction === 0xf023) &&
-				lc3.bufferedKeys.isEmpty() && (lc3.getMemory(lc3.kbsr) & 0x8000) === 0) {
+			if ((instruction === 0xf020 || instruction === 0xf023) && lc3.bufferedKeys.isEmpty() && (lc3.getMemory(lc3.kbsr) & 0x8000) === 0) {
 				inputExhausted = true;
 				break;
 			}
@@ -43,11 +42,11 @@ export function runLC3(code: string, input = ""): string {
 		}
 		output = (output + decoder.decode()).slice(0, maxOutput);
 		if (output.length >= maxOutput) {
-			output += "\n[Output limit reached]";
+			output += '\n[Output limit reached]';
 		} else if (inputExhausted) {
-			output += "\n[Input exhausted. Run again with more input.]";
+			output += '\n[Input exhausted. Run again with more input.]';
 		} else if (lc3.isRunning()) {
-			output += "\n[Instruction limit reached]";
+			output += '\n[Instruction limit reached]';
 		}
 		return output;
 	} finally {

@@ -1,8 +1,17 @@
+import { existsSync } from 'node:fs';
+import { fileURLToPath } from 'node:url';
 import fetch from 'node-fetch';
 import { commands } from './commands.js';
 
-
+// Root workspace settings take precedence over the legacy bot-local file.
+for (const relativePath of ['../../.env', '../.env']) {
+	const path = fileURLToPath(new URL(relativePath, import.meta.url));
+	if (existsSync(path)) process.loadEnvFile(path);
+}
 const { DISCORD_TOKEN, DISCORD_APPLICATION_ID } = process.env;
+if (!DISCORD_TOKEN || !DISCORD_APPLICATION_ID) {
+	throw new Error('DISCORD_TOKEN and DISCORD_APPLICATION_ID are required.');
+}
 
 const application_url = `https://discord.com/api/v10/applications/${DISCORD_APPLICATION_ID}/commands`;
 

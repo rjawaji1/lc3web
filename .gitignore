@@ -1,5 +1,17 @@
-node_modules/
-dist/
+# system
 .DS_Store
 
 .direnv/
+
+# build output
+dist/
+.wrangler/
+
+# dependencies
+node_modules/
+
+# generated wrangler types
+worker-configuration.d.ts
+
+# secrets
+.env

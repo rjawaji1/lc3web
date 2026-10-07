@@ -3,17 +3,14 @@
 	"name": "bot",
 	"main": "src/index.ts",
 	"compatibility_date": "2026-10-01",
+	"compatibility_flags": ["nodejs_compat"],
 	"observability": {
-		"enabled": true
+		"enabled": true,
 	},
 	"placement": {
-		"mode": "smart"
+		"mode": "smart",
 	},
 	"secrets": {
-		"required": [
-			"DISCORD_APPLICATION_ID",
-			"DISCORD_TOKEN",
-			"PUBLIC_KEY"
-		]
-	}
+		"required": ["DISCORD_APPLICATION_ID", "DISCORD_TOKEN", "PUBLIC_KEY"],
+	},
 }

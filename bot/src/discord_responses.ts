@@ -6,27 +6,25 @@ import {
 	InteractionResponseType,
 	MessageFlags,
 	TextInputStyle,
-} from "discord-api-types/v10";
+} from 'discord-api-types/v10';
 import type {
 	APIInteractionResponse,
 	APIInteractionResponseCallbackData,
 	APIModalComponent,
 	APIModalInteractionResponseCallbackComponent,
 	APITextDisplayComponent,
-	APITextInputComponent
-} from "discord-api-types/v10";
+	APITextInputComponent,
+} from 'discord-api-types/v10';
 
-function discordResponse(
-	data: Partial<APIInteractionResponseCallbackData>,
-): APIInteractionResponse {
+function discordResponse(data: Partial<APIInteractionResponseCallbackData>): APIInteractionResponse {
 	return {
 		type: InteractionResponseType.ChannelMessageWithSource,
-		data: { ...data }
-	}
+		data: { ...data },
+	};
 }
 
 export function ephemeral(content: string, ...embeds: APIEmbed[]): APIInteractionResponse {
-	return discordResponse({ content, embeds, flags: MessageFlags.Ephemeral })
+	return discordResponse({ content, embeds, flags: MessageFlags.Ephemeral });
 }
 
 export function reply(
@@ -39,19 +37,15 @@ export function reply(
 	return discordResponse({ content, ...options });
 }
 
-export function modal(
-	id: string,
-	title: string,
-	components: APIModalInteractionResponseCallbackComponent[]
-): APIInteractionResponse{
+export function modal(id: string, title: string, components: APIModalInteractionResponseCallbackComponent[]): APIInteractionResponse {
 	return {
 		type: InteractionResponseType.Modal,
 		data: {
 			custom_id: id,
 			title,
 			components,
-		}
-	}
+		},
+	};
 }
 
 export function modalTextAreaComponent(

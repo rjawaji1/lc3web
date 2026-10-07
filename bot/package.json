@@ -1,6 +1,7 @@
 {
-	"name": "bot",
-	"version": "0.0.0",
+	"name": "@lc3/bot",
+	"version": "1.0.0",
+	"description": "Discord bot for the LC-3 simulator, running on Cloudflare Workers.",
 	"private": true,
 	"type": "module",
 	"scripts": {
@@ -8,7 +9,9 @@
 		"dev": "wrangler dev",
 		"start": "wrangler dev",
 		"cf-typegen": "wrangler types",
-		"register": "export $(grep -v '^#' .env | xargs) && node cmd/register.js"
+		"types": "wrangler types",
+		"check": "tsc --noEmit",
+		"register": "node cmd/register.js"
 	},
 	"devDependencies": {
 		"@types/node": "^26.6.4",
@@ -18,6 +21,7 @@
 		"wrangler": "^4.147.0"
 	},
 	"dependencies": {
+		"@lc3/sim": "workspace:*",
 		"node-fetch": "^3.3.2",
 		"tweetnacl": "^1.0.3"
 	},

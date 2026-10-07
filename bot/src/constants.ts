@@ -15,13 +15,8 @@ export const Limits = {
 	ChannelName: 100,
 } as const;
 
-
-
 export const Permissions = {
-	ReadWrite:
-		PermissionFlagsBits.ViewChannel |
-		PermissionFlagsBits.SendMessages |
-		PermissionFlagsBits.ReadMessageHistory,
+	ReadWrite: PermissionFlagsBits.ViewChannel | PermissionFlagsBits.SendMessages | PermissionFlagsBits.ReadMessageHistory,
 	ReadWriteManage:
 		PermissionFlagsBits.ViewChannel |
 		PermissionFlagsBits.SendMessages |
